@@ -1,0 +1,19 @@
+(executables
+ (names bg long_click prefs)
+ (modes js)
+ ;(libraries js_of_ocaml js_of_ocaml-lwt promise_jsoo ocaml-vdom)
+ ;(preprocess
+ ; (pps lwt_ppx js_of_ocaml-ppx))
+ )
+
+(rule
+ (alias dev)
+ (deps
+  (glob_files icons/*)
+  (:rootfiles manifest.json preferences.html)
+  (:jsfiles bg.bc.js long_click.bc.js prefs.bc.js))
+ (action
+  (progn
+   (run diskuvbox copy-file-into %{rootfiles} output/)
+   (run diskuvbox copy-file-into %{jsfiles} output/js)
+   (run diskuvbox copy-dir icons output/icons))))
